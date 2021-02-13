@@ -1,11 +1,14 @@
 class SkyCylinder
     def initialize(filename, segments = 8, repeat_x = 1)
         @segments = segments
-        @segment_angle = 360.0 / @segments
-        @texture_slice = 1.0 / @segments
+        generate_texture
+        generate_display_list
+        calculate_parameters
+    end
 
+    def generate_texture
         # 1 - we load classic Gosu image
-        # 2- Gosu::render will allow us to draw reverted Gosu image on Y axis and repeat_x times repeated on X axis
+        # 2 - Gosu::render will allow us to draw reverted Gosu image on Y axis and repeat_x times repeated on X axis
         gosu_image = Gosu::Image.new(filename, retro: true)
         wip_gosu_texture = Gosu::render(gosu_image.width * repeat_x, gosu_image.height, retro: true) do
             repeat_x.times do |x|
@@ -16,13 +19,8 @@ class SkyCylinder
         # we use the resulted Gosu image to create an opengl texture 
         @texture = Texture.new(wip_gosu_texture)
 
-        @ray_length = (@texture.width / Math::PI) * 0.5
-        @height = @texture.height
-
         gosu_image = nil
         wip_gosu_texture = nil
-
-        generate_display_list
     end
 
     def generate_display_list
@@ -46,6 +44,13 @@ class SkyCylinder
                 end
             glEnd
         glEndList
+    end
+
+    def calculate_parameters
+        @segment_angle = 360.0 / @segments
+        @texture_slice = 1.0 / @segments
+        @ray_length = (@texture.width / Math::PI) * 0.5
+        @height = @texture.height
     end
 
     def draw(origin_x = 0, origin_y = 0, origin_z = 0)
