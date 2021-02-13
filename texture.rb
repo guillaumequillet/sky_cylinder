@@ -1,7 +1,7 @@
 class Texture
     attr_reader :width, :height
     def initialize(filename)
-        gosu_image = Gosu::Image.new(filename, retro: true)
+        gosu_image = filename.is_a?(Gosu::Image) ? filename : Gosu::Image.new(filename, retro: true)
         array_of_pixels = gosu_image.to_blob
         tex_name_buf = ' ' * 4
         glGenTextures(1, tex_name_buf)
@@ -17,5 +17,13 @@ class Texture
   
     def get_id
         return @tex_name
+    end
+
+    def self.load_tiles(filename, tile_width, tile_height)
+        textures = []
+        Gosu::Image.load_tiles(filename, tile_width, tile_height, retro: true).each do |gosu_image|
+            textures.push Texture.new(gosu_image)
+        end
+        return textures
     end
 end
