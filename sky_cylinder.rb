@@ -26,6 +26,8 @@ class SkyCylinder
     def generate_display_list
         @display_list = glGenLists(1)
         glNewList(@display_list, GL_COMPILE)
+            glDisable(GL_DEPTH_TEST)
+            glDepthMask(GL_FALSE)
             glBindTexture(GL_TEXTURE_2D, @texture.get_id)
             glBegin(GL_QUADS)
                 @segments.times do |segment|
@@ -43,6 +45,8 @@ class SkyCylinder
                     glTexCoord2d(r, t); glVertex3f(x2, @height, z2)
                 end
             glEnd
+            glEnable(GL_DEPTH_TEST)
+            glDepthMask(GL_TRUE)
         glEndList
     end
 
