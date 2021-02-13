@@ -42,10 +42,10 @@ class Window < Gosu::Window
 
         if Gosu::button_down?(Gosu::KB_RIGHT)
             @cam_angle += vel 
-            @airship_frame = 0
+            @airship_frame = 2
         elsif Gosu::button_down?(Gosu::KB_LEFT)
             @cam_angle -= vel 
-            @airship_frame = 2
+            @airship_frame = 0
         else
             @airship_frame = 1
         end
@@ -71,7 +71,7 @@ class Window < Gosu::Window
             glLoadIdentity
             gluLookAt(@cam_x, @cam_y, @cam_z,  @cam_t_x, @cam_t_y, @cam_t_z,  0, 1, 0)
 
-            @sky_cylinder ||= SkyCylinder.new('./gfx/skies/sky1.png', 8, 2)
+            @sky_cylinder ||= SkyCylinder.new('./gfx/skies/sky1.png', 12, 2)
             @sky_cylinder.draw(@cam_t_x, 0, @cam_t_z)
 
             
