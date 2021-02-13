@@ -23,17 +23,27 @@ class Window < Gosu::Window
         @map_width ||= 40
         @map_length ||= 40
 
-        @cam_x ||= @map_width * 0.5 * 16
-        @cam_y ||= 32
-        @cam_z ||= @map_length * 0.5 * 16
+        @cam_t_x ||= @map_width * 0.5 * 16
+        @cam_t_y ||= 32
+        @cam_t_z ||= @map_length * 0.5 * 16
         @cam_angle ||= 0
         @cam_distance = 16.0
 
-        @cam_angle += 0.15
+        vel = 1
+        if Gosu::button_down?(Gosu::KB_UP)
+            @cam_t_x += vel * Math::cos(@cam_angle * Math::PI / 180.0) 
+            @cam_t_z += vel * Math::sin(@cam_angle * Math::PI / 180.0) 
+        elsif Gosu::button_down?(Gosu::KB_DOWN)
+            @cam_t_x -= vel * Math::cos(@cam_angle * Math::PI / 180.0) 
+            @cam_t_z -= vel * Math::sin(@cam_angle * Math::PI / 180.0) 
+        end
 
-        @cam_t_x = @cam_x + @cam_distance * Math::cos(@cam_angle * Math::PI / 180)
-        @cam_t_y = @cam_y
-        @cam_t_z = @cam_z + @cam_distance * Math::sin(@cam_angle * Math::PI / 180)
+        @cam_angle += vel if Gosu::button_down?(Gosu::KB_RIGHT)
+        @cam_angle -= vel if Gosu::button_down?(Gosu::KB_LEFT)
+
+        @cam_x = @cam_t_x - @cam_distance * Math::cos(@cam_angle * Math::PI / 180)
+        @cam_y = @cam_t_y
+        @cam_z = @cam_t_z - @cam_distance * Math::sin(@cam_angle * Math::PI / 180)
     end
 
     def draw
