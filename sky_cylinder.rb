@@ -28,6 +28,8 @@ class SkyCylinder
         glNewList(@display_list, GL_COMPILE)
             glDisable(GL_DEPTH_TEST)
             glDepthMask(GL_FALSE)
+            glEnable(GL_CULL_FACE)
+            glCullFace(GL_BACK)
             glBindTexture(GL_TEXTURE_2D, @texture.get_id)
             glBegin(GL_QUADS)
                 @segments.times do |segment|
@@ -47,6 +49,7 @@ class SkyCylinder
             glEnd
             glEnable(GL_DEPTH_TEST)
             glDepthMask(GL_TRUE)
+            glDisable(GL_CULL_FACE)
         glEndList
     end
 

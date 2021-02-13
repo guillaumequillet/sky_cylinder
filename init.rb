@@ -27,7 +27,7 @@ class Window < Gosu::Window
         @cam_t_y ||= 16
         @cam_t_z ||= @map_length * 0.5 * 16
         @cam_angle ||= 0
-        @cam_distance = 80.0
+        @cam_distance = 128.0
 
         @airship_frame ||= 1
 
