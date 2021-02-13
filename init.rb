@@ -27,7 +27,7 @@ class Window < Gosu::Window
         @cam_t_y ||= 16
         @cam_t_z ||= @map_length * 0.5 * 16
         @cam_angle ||= 0
-        @cam_distance = 128.0
+        @cam_distance = 100.0
 
         @airship_frame ||= 1
 
@@ -71,7 +71,7 @@ class Window < Gosu::Window
             glLoadIdentity
             gluLookAt(@cam_x, @cam_y, @cam_z,  @cam_t_x, @cam_t_y, @cam_t_z,  0, 1, 0)
 
-            @sky_cylinder ||= SkyCylinder.new('./gfx/skies/sky1.png', 16, 2)
+            @sky_cylinder ||= SkyCylinder.new('./gfx/skies/sky1.png', 8, 2)
             @sky_cylinder.draw(@cam_t_x, 0, @cam_t_z)
 
             
