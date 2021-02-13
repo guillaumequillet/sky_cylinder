@@ -1,12 +1,12 @@
 class SkyCylinder
     def initialize(filename, segments = 8, repeat_x = 1)
         @segments = segments
-        generate_texture
-        generate_display_list
+        generate_texture(filename, repeat_x)
         calculate_parameters
+        generate_display_list
     end
 
-    def generate_texture
+    def generate_texture(filename, repeat_x)
         # 1 - we load classic Gosu image
         # 2 - Gosu::render will allow us to draw reverted Gosu image on Y axis and repeat_x times repeated on X axis
         gosu_image = Gosu::Image.new(filename, retro: true)
